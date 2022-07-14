@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace WorkOrdersAssignmentAPI.Repository.Services
 {
-    internal class WorkOrder
+    public class WorkOrder
     {
+
     }
 }
