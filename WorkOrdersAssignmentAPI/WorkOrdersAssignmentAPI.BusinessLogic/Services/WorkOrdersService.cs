@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkOrdersAssignmentAPI.Repository.Services
+namespace WorkOrdersAssignmentAPI.BusinessLogic.Services
 {
-    public class WorkOrder
+    public class WorkOrdersService
     {
 
     }

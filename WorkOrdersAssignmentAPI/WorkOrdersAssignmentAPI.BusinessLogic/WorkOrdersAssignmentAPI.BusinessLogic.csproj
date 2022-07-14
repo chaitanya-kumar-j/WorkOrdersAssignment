@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WorkOrdersAssignmentAPI.Common\WorkOrdersAssignmentAPI.Common.csproj" />
+    <ProjectReference Include="..\WorkOrdersAssignmentAPI.Repository\WorkOrdersAssignmentAPI.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

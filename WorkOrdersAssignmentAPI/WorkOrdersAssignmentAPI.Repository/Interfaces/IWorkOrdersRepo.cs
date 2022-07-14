@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkOrdersAssignmentAPI.Common.DTOs;
 
-namespace WorkOrdersAssignmentAPI.BusinessLogic.Interfaces
+namespace WorkOrdersAssignmentAPI.Repository.Interfaces
 {
-    public interface IWorkOrders
+    public interface IWorkOrdersRepo
     {
         Task<IEnumerable<WorkOrderResponse>> GetWorkOrdersByDate(DateTime date);
 

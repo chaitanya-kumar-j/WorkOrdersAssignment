@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkOrdersAssignmentAPI.Repository.DatabaseContext;
 
@@ -11,9 +12,10 @@ using WorkOrdersAssignmentAPI.Repository.DatabaseContext;
 namespace WorkOrdersAssignmentAPI.Repository.Migrations
 {
     [DbContext(typeof(WorkOrdersDbContext))]
-    partial class WorkOrdersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220714144506_Make technicianId nullable in WorkOrder and add Deactivated date in Technician")]
+    partial class MaketechnicianIdnullableinWorkOrderandaddDeactivateddateinTechnician
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

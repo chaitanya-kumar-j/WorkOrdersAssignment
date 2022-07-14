@@ -8,6 +8,12 @@ namespace WorkOrdersAssignmentAPI.Common.DTOs
 {
     public class TechnicianResponse
     {
+        public string? RegistrationNumber { get; set; }
 
+        public string? FirstName { get; set; }
+
+        public string? LastName { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }
