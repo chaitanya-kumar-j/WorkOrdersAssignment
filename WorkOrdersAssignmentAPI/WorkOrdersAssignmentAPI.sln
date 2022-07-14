@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkOrdersAssignmentAPI", "WorkOrdersAssignmentAPI\WorkOrdersAssignmentAPI.csproj", "{62B0860E-5B0C-461E-B05E-B88FDAB08F4D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62B0860E-5B0C-461E-B05E-B88FDAB08F4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62B0860E-5B0C-461E-B05E-B88FDAB08F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62B0860E-5B0C-461E-B05E-B88FDAB08F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62B0860E-5B0C-461E-B05E-B88FDAB08F4D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F32206C-4385-4CC2-8FBE-E95F0C0B4CF9}
+	EndGlobalSection
+EndGlobal
