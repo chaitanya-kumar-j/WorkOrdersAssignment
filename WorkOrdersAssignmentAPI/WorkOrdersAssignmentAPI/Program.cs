@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Reflection;
 using WorkOrdersAssignmentAPI.BusinessLogic.Interfaces;
 using WorkOrdersAssignmentAPI.BusinessLogic.Services;
 using WorkOrdersAssignmentAPI.Controllers;
@@ -26,7 +27,13 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    // Set the comments path for the XmlComments file.
+    string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
+}) ;
 
 builder.Services.AddScoped<ITechnicians,TechniciansService>();
 

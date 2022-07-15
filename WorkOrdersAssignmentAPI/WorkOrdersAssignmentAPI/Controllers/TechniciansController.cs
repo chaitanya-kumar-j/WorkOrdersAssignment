@@ -18,6 +18,11 @@ namespace WorkOrdersAssignmentAPI.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Adds new technician
+        /// </summary>
+        /// <param name="newTechnician"></param>
+        /// <returns> Added technician details </returns>
         [HttpPost]
         public async Task<ActionResult> AddTechnicianAsync([FromBody] TechnicianInput newTechnician)
         {
@@ -35,6 +40,13 @@ namespace WorkOrdersAssignmentAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Deactivates the technician when passed technician registration number
+        /// </summary>
+        /// <param name="technicianId"></param>
+        /// <returns>
+        /// returns status of deactivation
+        /// </returns>
         [HttpPatch]
         [Route("{technicianId}")]
         public async Task<IActionResult> DeactivateTechnicianByIdAsync(string technicianId)
