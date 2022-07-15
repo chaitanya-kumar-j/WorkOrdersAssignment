@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkOrdersAssignmentAPI.Common.DTOs;
 using WorkOrdersAssignmentAPI.Repository.DatabaseContext;
+using WorkOrdersAssignmentAPI.Repository.Entities;
 using WorkOrdersAssignmentAPI.Repository.Interfaces;
 
 namespace WorkOrdersAssignmentAPI.Repository.Services
@@ -17,29 +19,188 @@ namespace WorkOrdersAssignmentAPI.Repository.Services
         {
             _workOrdersDbContext = workOrdersDbContext;
         }
-        public Task<WorkOrderResponse> CreateWorkOrder(WorkOrderInput newWorkOrder)
+
+        public async Task<List<WorkOrderResponse>> GetWorkOrdersByDate(DateTime date)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await ConvertToResponseListAsync(await _workOrdersDbContext.WorkOrders.ToListAsync());
+                
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task DeleteWorkOrderById(string workOrderId)
+        public async Task<List<WorkOrderResponse>> GetWorkOrdersByTechnicianId(string technicianRegNum)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await ConvertToResponseListAsync(await _workOrdersDbContext.WorkOrders
+                .Where(x => x.TechnicianRegNumber == technicianRegNum)
+                .ToListAsync()
+                );
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public async Task<WorkOrderResponse> CreateWorkOrder(WorkOrderInput newWorkOrder)
+        {
+            try
+            {
+                WorkOrderResponse workOrderResponse;
+                WorkOrder workOrder = new WorkOrder()
+                {
+                    WorkOrderId = Guid.NewGuid().ToString(),
+                    CreatedAt = DateTime.Now.Date,
+                    Place = newWorkOrder.Place
+                };
+                if(newWorkOrder.TechnicianRegNumber != null & newWorkOrder.TechnicianRegNumber!="string")
+                {
+                    var technician = await _workOrdersDbContext.Technicians.FindAsync(newWorkOrder.TechnicianRegNumber);
+                    if (!technician.IsActive)
+                    {
+                        technician = null;
+                        goto Add;
+                    }
+                    workOrder.TechnicianRegNumber = technician.RegistrationNumber;
+                    _workOrdersDbContext.WorkOrders.Add(workOrder);
+                    await _workOrdersDbContext.SaveChangesAsync();
+                    workOrderResponse = new WorkOrderResponse()
+                    {
+                        WorkOrderId = workOrder.WorkOrderId,
+                        Place = workOrder.Place,
+                        CreatedAt = workOrder.CreatedAt,
+                    };
+                    workOrderResponse.Technician = new TechnicianResponse()
+                    {
+                        RegistrationNumber = technician.RegistrationNumber,
+                        FirstName = technician.FirstName,
+                        LastName = technician.LastName,
+                        IsActive = technician.IsActive
+                    };
+                    return workOrderResponse;
+                }
+                Add: 
+                _workOrdersDbContext.WorkOrders.Add(workOrder);
+                await _workOrdersDbContext.SaveChangesAsync();
+
+                workOrderResponse = new WorkOrderResponse()
+                {
+                    WorkOrderId = workOrder.WorkOrderId,
+                    Place = workOrder.Place,
+                    CreatedAt = workOrder.CreatedAt,
+                    Technician = null
+                };
+                return workOrderResponse;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<IEnumerable<WorkOrderResponse>> GetWorkOrdersByDate(DateTime date)
+        public async Task DeleteWorkOrderById(string workOrderId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var workOrder = await _workOrdersDbContext.WorkOrders.FindAsync(workOrderId);
+                if(workOrder == null)
+                {
+                    throw new Exception("No work order with the given order Id.");
+                }
+                _workOrdersDbContext.WorkOrders.Remove(workOrder);
+                await _workOrdersDbContext.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<IEnumerable<WorkOrderResponse>> GetWorkOrdersByTechnicianId(string technicianRegNum)
+        public async Task<WorkOrderResponse> UpdateWorkOrderTechnician(string workOrderId, string technicianRegNum)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var workOrder = await _workOrdersDbContext.WorkOrders.FindAsync(workOrderId);
+                if (workOrder == null)
+                {
+                    throw new Exception("No work order with the given order Id.");
+                }
+                var technician = await _workOrdersDbContext.Technicians.FindAsync(technicianRegNum);
+                if(technician == null)
+                {
+                    throw new Exception("No technician with the given Registration number.");
+                }
+                if (!technician.IsActive)
+                {
+                    throw new Exception("The given technician is not active.");
+                }
+
+                workOrder.TechnicianRegNumber = technician.RegistrationNumber;
+                _workOrdersDbContext.WorkOrders.Update(workOrder);
+                await _workOrdersDbContext.SaveChangesAsync();
+
+                WorkOrderResponse workOrderResponse = new WorkOrderResponse()
+                {
+                    WorkOrderId = workOrder.WorkOrderId,
+                    Place = workOrder.Place,
+                    CreatedAt = workOrder.CreatedAt,
+                };
+                workOrderResponse.Technician = new TechnicianResponse()
+                {
+                    RegistrationNumber = technician.RegistrationNumber,
+                    FirstName = technician.FirstName,
+                    LastName = technician.LastName,
+                    IsActive = technician.IsActive
+                };
+                return workOrderResponse;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<WorkOrderResponse> UpdateWorkOrderTechnician(string workOrderId, string technicianRegNum)
+        private async Task<List<WorkOrderResponse>> ConvertToResponseListAsync(List<WorkOrder> workOrders)
         {
-            throw new NotImplementedException();
+            List<WorkOrderResponse> result = new List<WorkOrderResponse>();
+            foreach (var workOrder in workOrders)
+            {
+                WorkOrderResponse workOrderResponse = new WorkOrderResponse()
+                {
+                    WorkOrderId = workOrder.WorkOrderId,
+                    Place = workOrder.Place,
+                    CreatedAt = workOrder.CreatedAt,
+                };
+                var technician = await _workOrdersDbContext.Technicians.FindAsync(workOrder.TechnicianRegNumber);
+                if(technician != null)
+                {
+                    workOrderResponse.Technician = new TechnicianResponse()
+                    {
+                        RegistrationNumber = technician.RegistrationNumber,
+                        FirstName = technician.FirstName,
+                        LastName = technician.LastName,
+                        IsActive = technician.IsActive
+                    };
+                }
+                else
+                {
+                    workOrderResponse.Technician = null;
+                }
+                result.Add(workOrderResponse);
+            }
+            return result;
         }
     }
 }

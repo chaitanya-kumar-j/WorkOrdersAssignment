@@ -22,6 +22,10 @@ builder.Services.AddScoped<ITechnicians,TechniciansService>();
 
 builder.Services.AddScoped<ITechniciansRepo, TechniciansRepoService>();
 
+builder.Services.AddScoped<IWorkOrders, WorkOrdersService>();
+
+builder.Services.AddScoped<IWorkOrdersRepo, WorkOrdersRepoService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

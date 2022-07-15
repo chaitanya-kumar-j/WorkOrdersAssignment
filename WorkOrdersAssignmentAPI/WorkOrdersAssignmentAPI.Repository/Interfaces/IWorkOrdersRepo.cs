@@ -9,9 +9,9 @@ namespace WorkOrdersAssignmentAPI.Repository.Interfaces
 {
     public interface IWorkOrdersRepo
     {
-        Task<IEnumerable<WorkOrderResponse>> GetWorkOrdersByDate(DateTime date);
+        Task<List<WorkOrderResponse>> GetWorkOrdersByDate(DateTime date);
 
-        Task<IEnumerable<WorkOrderResponse>> GetWorkOrdersByTechnicianId(string technicianRegNum);
+        Task<List<WorkOrderResponse>> GetWorkOrdersByTechnicianId(string technicianRegNum);
 
         Task<WorkOrderResponse> CreateWorkOrder(WorkOrderInput newWorkOrder);
 
