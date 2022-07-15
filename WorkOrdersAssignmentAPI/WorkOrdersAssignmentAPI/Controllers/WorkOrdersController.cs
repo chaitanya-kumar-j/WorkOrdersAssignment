@@ -20,6 +20,11 @@ namespace WorkOrdersAssignmentAPI.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Retreives all work orders assigned for particular date
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns>List of work orders assigned for given date</returns>
         [HttpGet]
         [Route("{date:DateTime}")]
         public async Task<IActionResult> GetWorkOrdersByDateAsync(DateTime date)
@@ -41,6 +46,11 @@ namespace WorkOrdersAssignmentAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Retreives all work orders assigned for particular technician
+        /// </summary>
+        /// <param name="technicianRegNum"></param>
+        /// <returns>List of work orders assigned for given technician</returns>
         [HttpGet]
         public async Task<IActionResult> GetWorkOrdersByTechnicianIdAsync(string technicianRegNum)
         {
@@ -62,6 +72,11 @@ namespace WorkOrdersAssignmentAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Creates new work order
+        /// </summary>
+        /// <param name="newWorkOrder"></param>
+        /// <returns> Returns created work order details</returns>
         [HttpPost]
         public async Task<IActionResult> CreateWorkOrderAsync([FromBody] WorkOrderInput newWorkOrder)
         {
@@ -92,6 +107,11 @@ namespace WorkOrdersAssignmentAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes the work order of specified work order id
+        /// </summary>
+        /// <param name="workOrderId"></param>
+        /// <returns>Delete action status</returns>
         [HttpDelete]
         [Route("{workOrderId}")]
         public async Task<IActionResult> DeleteWorkOrderByIdAsync(string workOrderId)
@@ -114,6 +134,12 @@ namespace WorkOrdersAssignmentAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates/Adds new technician to given work order
+        /// </summary>
+        /// <param name="workOrderId"></param>
+        /// <param name="technicianRegNum"></param>
+        /// <returns>Returns updated work order details</returns>
         [HttpPut]
         [Route("{workOrderId}")]
         public async Task<IActionResult> UpdateWorkOrderTechnicianAsync(string workOrderId, string technicianRegNum)
