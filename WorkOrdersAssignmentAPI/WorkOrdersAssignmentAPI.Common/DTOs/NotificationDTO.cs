@@ -8,7 +8,7 @@ namespace WorkOrdersAssignmentAPI.Common.DTOs
 {
     public class NotificationDTO
     {
-        public string Message { get; set; }
-        public string TechnicianRegNum { get; set; }
+        public string Message { get; set; } = string.Empty;
+        public string TechnicianRegNum { get; set; } = string.Empty;
     }
 }

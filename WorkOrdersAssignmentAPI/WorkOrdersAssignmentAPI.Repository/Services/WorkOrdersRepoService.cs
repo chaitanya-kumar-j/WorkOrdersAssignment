@@ -20,7 +20,7 @@ namespace WorkOrdersAssignmentAPI.Repository.Services
             _workOrdersDbContext = workOrdersDbContext;
         }
 
-        public async Task<List<WorkOrderResponse>> GetWorkOrdersByDate(DateTime date)
+        public async Task<List<WorkOrderResponse>> GetWorkOrdersByDateAsync(DateTime date)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace WorkOrdersAssignmentAPI.Repository.Services
             }
         }
 
-        public async Task<List<WorkOrderResponse>> GetWorkOrdersByTechnicianId(string technicianRegNum)
+        public async Task<List<WorkOrderResponse>> GetWorkOrdersByTechnicianIdAsync(string technicianRegNum)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace WorkOrdersAssignmentAPI.Repository.Services
                 throw;
             }
         }
-        public async Task<WorkOrderResponse> CreateWorkOrder(WorkOrderInput newWorkOrder)
+        public async Task<WorkOrderResponse> CreateWorkOrderAsync(WorkOrderInput newWorkOrder)
         {
             try
             {
@@ -61,10 +61,10 @@ namespace WorkOrdersAssignmentAPI.Repository.Services
                     CreatedAt = DateTime.Now.Date,
                     Place = newWorkOrder.Place
                 };
-                if(newWorkOrder.TechnicianRegNumber != null & newWorkOrder.TechnicianRegNumber!="string")
+                if(newWorkOrder.TechnicianRegNumber != null)
                 {
                     var technician = await _workOrdersDbContext.Technicians.FindAsync(newWorkOrder.TechnicianRegNumber);
-                    if (!technician.IsActive)
+                    if(technician == null || !technician.IsActive)
                     {
                         technician = null;
                         goto Add;
@@ -107,7 +107,7 @@ namespace WorkOrdersAssignmentAPI.Repository.Services
             }
         }
 
-        public async Task DeleteWorkOrderById(string workOrderId)
+        public async Task DeleteWorkOrderByIdAsync(string workOrderId)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace WorkOrdersAssignmentAPI.Repository.Services
             }
         }
 
-        public async Task<WorkOrderResponse> UpdateWorkOrderTechnician(string workOrderId, string technicianRegNum)
+        public async Task<WorkOrderResponse> UpdateWorkOrderTechnicianAsync(string workOrderId, string technicianRegNum)
         {
             try
             {

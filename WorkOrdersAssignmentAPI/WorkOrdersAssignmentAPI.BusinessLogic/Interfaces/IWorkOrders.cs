@@ -9,14 +9,14 @@ namespace WorkOrdersAssignmentAPI.BusinessLogic.Interfaces
 {
     public interface IWorkOrders
     {
-        Task<List<WorkOrderResponse>> GetWorkOrdersByDate(DateTime date);
+        Task<List<WorkOrderResponse>> GetWorkOrdersByDateAsync(DateTime date);
 
-        Task<List<WorkOrderResponse>> GetWorkOrdersByTechnicianId(string technicianRegNum);
+        Task<List<WorkOrderResponse>> GetWorkOrdersByTechnicianIdAsync(string technicianRegNum);
 
-        Task<WorkOrderResponse> CreateWorkOrder(WorkOrderInput newWorkOrder);
+        Task<WorkOrderResponse> CreateWorkOrderAsync(WorkOrderInput newWorkOrder);
 
-        Task DeleteWorkOrderById(string workOrderId);
+        Task DeleteWorkOrderByIdAsync(string workOrderId);
 
-        Task<WorkOrderResponse> UpdateWorkOrderTechnician(string workOrderId, string technicianRegNum);
+        Task<WorkOrderResponse> UpdateWorkOrderTechnicianAsync(string workOrderId, string technicianRegNum);
     }
 }

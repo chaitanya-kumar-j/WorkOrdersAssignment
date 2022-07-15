@@ -18,11 +18,11 @@ namespace WorkOrdersAssignmentAPI.BusinessLogic.Services
             _workOrdersRepo = workOrdersRepo;
         }
 
-        public async Task<List<WorkOrderResponse>> GetWorkOrdersByDate(DateTime date)
+        public async Task<List<WorkOrderResponse>> GetWorkOrdersByDateAsync(DateTime date)
         {
             try
             {
-                return await _workOrdersRepo.GetWorkOrdersByDate(date);
+                return await _workOrdersRepo.GetWorkOrdersByDateAsync(date);
             }
             catch (Exception)
             {
@@ -31,11 +31,11 @@ namespace WorkOrdersAssignmentAPI.BusinessLogic.Services
             }
         }
 
-        public async Task<List<WorkOrderResponse>> GetWorkOrdersByTechnicianId(string technicianRegNum)
+        public async Task<List<WorkOrderResponse>> GetWorkOrdersByTechnicianIdAsync(string technicianRegNum)
         {
             try
             {
-                return await _workOrdersRepo.GetWorkOrdersByTechnicianId(technicianRegNum);
+                return await _workOrdersRepo.GetWorkOrdersByTechnicianIdAsync(technicianRegNum);
             }
             catch (Exception)
             {
@@ -44,11 +44,11 @@ namespace WorkOrdersAssignmentAPI.BusinessLogic.Services
             }
         }
 
-        public async Task<WorkOrderResponse> CreateWorkOrder(WorkOrderInput newWorkOrder)
+        public async Task<WorkOrderResponse> CreateWorkOrderAsync(WorkOrderInput newWorkOrder)
         {
             try
             {
-                return await _workOrdersRepo.CreateWorkOrder(newWorkOrder);
+                return await _workOrdersRepo.CreateWorkOrderAsync(newWorkOrder);
             }
             catch (Exception)
             {
@@ -57,11 +57,11 @@ namespace WorkOrdersAssignmentAPI.BusinessLogic.Services
             }
         }
 
-        public async Task DeleteWorkOrderById(string workOrderId)
+        public async Task DeleteWorkOrderByIdAsync(string workOrderId)
         {
             try
             {
-                await _workOrdersRepo.DeleteWorkOrderById(workOrderId);
+                await _workOrdersRepo.DeleteWorkOrderByIdAsync(workOrderId);
             }
             catch (Exception)
             {
@@ -70,11 +70,11 @@ namespace WorkOrdersAssignmentAPI.BusinessLogic.Services
             }
         }
 
-        public async Task<WorkOrderResponse> UpdateWorkOrderTechnician(string workOrderId, string technicianRegNum)
+        public async Task<WorkOrderResponse> UpdateWorkOrderTechnicianAsync(string workOrderId, string technicianRegNum)
         {
             try
             {
-                return await _workOrdersRepo.UpdateWorkOrderTechnician(workOrderId, technicianRegNum);
+                return await _workOrdersRepo.UpdateWorkOrderTechnicianAsync(workOrderId, technicianRegNum);
             }
             catch (Exception)
             {

@@ -15,8 +15,6 @@ namespace WorkOrdersAssignmentAPI.Common.DTOs
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.Now.Date;
 
-
-        [Required]
         public string TechnicianRegNumber { get; set; } = string.Empty;
     }
 }

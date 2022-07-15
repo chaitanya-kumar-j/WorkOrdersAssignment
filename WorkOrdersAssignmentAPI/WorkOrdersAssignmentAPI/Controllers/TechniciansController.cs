@@ -10,10 +10,12 @@ namespace WorkOrdersAssignmentAPI.Controllers
     public class TechniciansController : ControllerBase
     {
         private readonly ITechnicians _technicians;
+        private readonly ILogger<TechniciansController> _logger;
 
-        public TechniciansController(ITechnicians technicians)
+        public TechniciansController(ITechnicians technicians, ILogger<TechniciansController> logger)
         {
             _technicians = technicians;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -21,11 +23,14 @@ namespace WorkOrdersAssignmentAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requesting AddTechnicianAsync...");
                 TechnicianResponse technicianResponse = await this._technicians.AddTechnicianAsync(newTechnician);
+                _logger.LogInformation("Request to AddTechnicianAsync is successful.");
                 return this.Ok(new { Success = true, Message = "New technician added successfully", Data = technicianResponse });
             }
             catch (Exception e)
             {
+                _logger.LogError($"Request to AddTechnicianAsync got exception : {e.Message}");
                 return this.BadRequest(new { Success = false, Message = e.Message });
             }
         }
@@ -36,11 +41,14 @@ namespace WorkOrdersAssignmentAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Requesting DeactivateTechnicianByIdAsync...");
                 TechnicianResponse technicianResponse = await this._technicians.DeactivateTechnicianByIdAsync(technicianId);
+                _logger.LogInformation("Request to DeactivateTechnicianByIdAsync is successful.");
                 return this.Ok(new { Success = true, Message = "Technician deactivated successfully", Data = technicianResponse });
             }
             catch (Exception e)
             {
+                _logger.LogError($"Request to DeactivateTechnicianByIdAsync got exception : {e.Message}");
                 return this.BadRequest(new { Success = false, Message = e.Message });
             }
         }
