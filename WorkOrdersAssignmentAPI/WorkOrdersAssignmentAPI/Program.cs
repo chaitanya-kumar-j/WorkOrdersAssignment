@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WorkOrdersAssignmentAPI.BusinessLogic.Interfaces;
 using WorkOrdersAssignmentAPI.BusinessLogic.Services;
+using WorkOrdersAssignmentAPI.Controllers;
 using WorkOrdersAssignmentAPI.Repository.DatabaseContext;
 using WorkOrdersAssignmentAPI.Repository.Interfaces;
 using WorkOrdersAssignmentAPI.Repository.Services;
@@ -11,8 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<WorkOrdersDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<WorkOrdersDbContext>(options => 
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -25,6 +26,10 @@ builder.Services.AddScoped<ITechniciansRepo, TechniciansRepoService>();
 builder.Services.AddScoped<IWorkOrders, WorkOrdersService>();
 
 builder.Services.AddScoped<IWorkOrdersRepo, WorkOrdersRepoService>();
+
+builder.Services.AddScoped<INotifications, NotificationsService>();
+
+builder.Services.AddScoped<INotificationsRepo, NotificationsRepoService>();
 
 var app = builder.Build();
 

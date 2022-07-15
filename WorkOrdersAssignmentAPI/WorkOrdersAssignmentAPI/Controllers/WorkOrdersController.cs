@@ -10,10 +10,12 @@ namespace WorkOrdersAssignmentAPI.Controllers
     public class WorkOrdersController : ControllerBase
     {
         private readonly IWorkOrders _workOrders;
+        private readonly INotifications _notifications;
 
-        public WorkOrdersController(IWorkOrders workOrders)
+        public WorkOrdersController(IWorkOrders workOrders, INotifications notifications)
         {
             _workOrders = workOrders;
+            _notifications = notifications;
         }
 
         [HttpGet]
@@ -60,6 +62,16 @@ namespace WorkOrdersAssignmentAPI.Controllers
             {
                 WorkOrderResponse workOrder = await this._workOrders
                     .CreateWorkOrder(newWorkOrder);
+                if (workOrder.Technician != null)
+                {
+                    NotificationDTO notificationDTO = new NotificationDTO()
+                    {
+                        TechnicianRegNum = workOrder.Technician.RegistrationNumber,
+                        Message = $"You have been assigned to a work Order with reference Id {workOrder.WorkOrderId}",
+
+                    };
+                    _notifications.SendNotification(notificationDTO);
+                }
                 return this.Ok(new { Success = true, 
                     Message = "New work order created successfully", 
                     Data = workOrder});
@@ -98,6 +110,16 @@ namespace WorkOrdersAssignmentAPI.Controllers
             {
                 WorkOrderResponse workOrder = await this._workOrders
                     .UpdateWorkOrderTechnician(workOrderId, technicianRegNum);
+                if (workOrder.Technician != null)
+                {
+                    NotificationDTO notificationDTO = new NotificationDTO()
+                    {
+                        TechnicianRegNum = workOrder.Technician.RegistrationNumber,
+                        Message = $"You have been assigned to a work Order with reference Id {workOrder.WorkOrderId}",
+
+                    };
+                    _notifications.SendNotification(notificationDTO);
+                }
                 return this.Ok(new
                 {
                     Success = true,
